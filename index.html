@@ -44,7 +44,7 @@
     position:relative;
     overflow:hidden;
   }
-
+ 
   /* ---------- Summary header (sticky, ticket style) ---------- */
   .summary-wrap{
     position:sticky;
@@ -113,7 +113,7 @@
     background:var(--ink);
     display:block;
   }
-
+ 
   /* ---------- Content ---------- */
   .content{
     flex:1 1 auto;
@@ -123,7 +123,7 @@
   }
   .view{display:none;}
   .view.active{display:block;}
-
+ 
   /* ---------- Registrar view ---------- */
   .section-label{
     font-size:11px;
@@ -156,7 +156,7 @@
   }
   .seg-btn.active.type-gasto{background:var(--expense); color:#fff;}
   .seg-btn.active.type-ingreso{background:var(--income); color:#fff;}
-
+ 
   .amount-box{
     background:var(--paper-2);
     border:1px solid var(--line);
@@ -188,7 +188,7 @@
   #amountInput::-webkit-outer-spin-button,
   #amountInput::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
   #amountInput::placeholder{color:#c9bfa6;}
-
+ 
   .chips{
     display:flex;
     flex-wrap:wrap;
@@ -208,7 +208,7 @@
   }
   .chip.active.type-gasto{background:var(--expense-soft); border-color:var(--expense); color:var(--expense);}
   .chip.active.type-ingreso{background:var(--income-soft); border-color:var(--income); color:var(--income);}
-
+ 
   .field-row{
     display:flex;
     gap:10px;
@@ -234,7 +234,7 @@
     color:var(--ink);
     outline:none;
   }
-
+ 
   .btn-submit{
     width:100%;
     border:none;
@@ -251,7 +251,7 @@
   .btn-submit.type-gasto{background:var(--expense);}
   .btn-submit.type-ingreso{background:var(--income);}
   .btn-submit:disabled{opacity:.4;}
-
+ 
   .today-list .item{
     display:flex;
     align-items:center;
@@ -279,7 +279,7 @@
     border:1px dashed var(--line);
     border-radius:var(--radius);
   }
-
+ 
   /* ---------- Historial view ---------- */
   .month-nav{
     display:flex;
@@ -325,7 +325,7 @@
     cursor:pointer;
   }
   .filter-btn.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
-
+ 
   .day-group{margin-bottom:18px;}
   .day-header{
     display:flex;
@@ -347,7 +347,7 @@
   }
   .day-net.pos{color:var(--income);}
   .day-net.neg{color:var(--expense);}
-
+ 
   /* ---------- Tab bar ---------- */
   .tabbar{
     flex:0 0 auto;
@@ -371,7 +371,7 @@
   .tab.active{color:var(--ink);}
   .tab svg{width:21px; height:21px;}
   .tab span{font-size:11px; font-weight:700;}
-
+ 
   /* ---------- Toast ---------- */
   .toast{
     position:absolute;
@@ -395,7 +395,7 @@
 </head>
 <body>
 <div class="app">
-
+ 
   <div class="summary-wrap">
     <div class="summary">
       <p class="summary-title">Balance general</p>
@@ -418,9 +418,9 @@
     </div>
     <div class="ticket-edge" id="ticketEdge"></div>
   </div>
-
+ 
   <main class="content">
-
+ 
     <!-- REGISTRAR -->
     <section class="view active" id="view-registrar">
       <p class="section-label">Tipo de movimiento</p>
@@ -428,16 +428,16 @@
         <button class="seg-btn active type-gasto" id="segGasto" data-type="gasto">Gasto</button>
         <button class="seg-btn type-ingreso" id="segIngreso" data-type="ingreso">Ingreso</button>
       </div>
-
+ 
       <p class="section-label">Monto</p>
       <div class="amount-box">
         <span class="amount-sign">$</span>
         <input type="number" id="amountInput" inputmode="decimal" placeholder="0" min="0" step="0.01">
       </div>
-
+ 
       <p class="section-label">Categoría</p>
       <div class="chips" id="chipsWrap"></div>
-
+ 
       <div class="field-row">
         <div class="field">
           <label for="noteInput">Nota (opcional)</label>
@@ -448,13 +448,13 @@
           <input type="date" id="dateInput">
         </div>
       </div>
-
+ 
       <button class="btn-submit type-gasto" id="submitBtn">Registrar gasto</button>
-
+ 
       <p class="section-label">Hoy</p>
       <div class="today-list" id="todayList"></div>
     </section>
-
+ 
     <!-- HISTORIAL -->
     <section class="view" id="view-historial">
       <div class="month-nav">
@@ -463,18 +463,18 @@
         <button id="nextMonth" aria-label="Mes siguiente">›</button>
       </div>
       <p class="month-summary" id="monthSummary"></p>
-
+ 
       <div class="filters">
         <button class="filter-btn active" data-filter="todos">Todo</button>
         <button class="filter-btn" data-filter="ingreso">Ingresos</button>
         <button class="filter-btn" data-filter="gasto">Gastos</button>
       </div>
-
+ 
       <div id="historialList"></div>
     </section>
-
+ 
   </main>
-
+ 
   <nav class="tabbar">
     <button class="tab active" data-view="registrar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -485,19 +485,19 @@
       <span>Historial</span>
     </button>
   </nav>
-
+ 
   <div class="toast" id="toast"></div>
 </div>
-
+ 
 <script>
 (function(){
   "use strict";
-
+ 
   var CATEGORIES = {
     gasto: ['Comida','Transporte','Casa','Salud','Ocio','Otros'],
     ingreso: ['Salario','Extra','Venta','Otros']
   };
-
+ 
   var state = {
     type: 'gasto',
     category: CATEGORIES.gasto[0],
@@ -506,9 +506,9 @@
     monthCursor: new Date()
   };
   state.monthCursor.setDate(1);
-
+ 
   var STORAGE_KEY = 'transacciones';
-
+ 
   // ---------- Storage ----------
   async function loadData(){
     try{
@@ -520,7 +520,7 @@
       state.transactions = [];
     }
   }
-
+ 
   async function saveData(){
     try{
       await window.storage.set(STORAGE_KEY, JSON.stringify(state.transactions), false);
@@ -528,24 +528,24 @@
       showToast('No se pudo guardar');
     }
   }
-
+ 
   // ---------- Helpers ----------
   function fmt(n){
     var sign = n < 0 ? '-' : '';
     return sign + '$' + Math.abs(Math.round(n)).toLocaleString('es-MX');
   }
-
+ 
   function todayISO(){
     var d = new Date();
     var m = String(d.getMonth()+1).padStart(2,'0');
     var day = String(d.getDate()).padStart(2,'0');
     return d.getFullYear() + '-' + m + '-' + day;
   }
-
+ 
   function capitalize(s){
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
-
+ 
   function showToast(msg){
     var t = document.getElementById('toast');
     t.textContent = msg;
@@ -553,7 +553,7 @@
     clearTimeout(showToast._t);
     showToast._t = setTimeout(function(){ t.classList.remove('show'); }, 1400);
   }
-
+ 
   function computeTotals(list){
     var ing = 0, gas = 0;
     list.forEach(function(tx){
@@ -562,7 +562,7 @@
     });
     return { ingresos: ing, gastos: gas, remanente: ing - gas };
   }
-
+ 
   // ---------- Rendering: summary ----------
   function renderSummary(){
     var t = computeTotals(state.transactions);
@@ -572,7 +572,7 @@
     remEl.textContent = fmt(t.remanente);
     remEl.classList.toggle('neg', t.remanente < 0);
   }
-
+ 
   // ---------- Rendering: registrar ----------
   function renderChips(){
     var wrap = document.getElementById('chipsWrap');
@@ -588,30 +588,30 @@
       wrap.appendChild(b);
     });
   }
-
+ 
   function renderTodayList(){
     var todayStr = todayISO();
     var list = state.transactions
       .filter(function(tx){ return tx.date === todayStr; })
       .sort(function(a,b){ return b.createdAt - a.createdAt; });
-
+ 
     var el = document.getElementById('todayList');
     el.innerHTML = '';
-
+ 
     if(list.length === 0){
       el.innerHTML = '<div class="empty-state">Aún no registras movimientos hoy.</div>';
       return;
     }
-
+ 
     list.forEach(function(tx){
       el.appendChild(buildItemRow(tx));
     });
   }
-
+ 
   function buildItemRow(tx){
     var row = document.createElement('div');
     row.className = 'item';
-
+ 
     var info = document.createElement('div');
     info.className = 'item-info';
     var cat = document.createElement('div');
@@ -625,14 +625,14 @@
       info.appendChild(note);
     }
     row.appendChild(info);
-
+ 
     var right = document.createElement('div');
     right.className = 'item-right';
     var amt = document.createElement('span');
     amt.className = 'item-amount ' + tx.type;
     amt.textContent = (tx.type === 'ingreso' ? '+' : '-') + fmt(tx.amount).replace('-','');
     right.appendChild(amt);
-
+ 
     var del = document.createElement('button');
     del.className = 'del-btn';
     del.setAttribute('aria-label','Eliminar');
@@ -641,17 +641,17 @@
       deleteTransaction(tx.id);
     });
     right.appendChild(del);
-
+ 
     row.appendChild(right);
     return row;
   }
-
+ 
   // ---------- Rendering: historial ----------
   function renderMonthNav(){
     var label = state.monthCursor.toLocaleDateString('es-MX', { month:'long', year:'numeric' });
     document.getElementById('monthLabel').textContent = capitalize(label);
   }
-
+ 
   function getMonthTransactions(){
     var y = state.monthCursor.getFullYear();
     var m = state.monthCursor.getMonth();
@@ -660,47 +660,47 @@
       return d.getFullYear() === y && d.getMonth() === m;
     });
   }
-
+ 
   function renderMonthSummary(monthList){
     var t = computeTotals(monthList);
     document.getElementById('monthSummary').innerHTML =
       'Ingresos <b>' + fmt(t.ingresos) + '</b> · Gastos <b>' + fmt(t.gastos) +
       '</b> · Saldo <b>' + fmt(t.remanente) + '</b>';
   }
-
+ 
   function renderHistorialList(){
     var monthList = getMonthTransactions();
     renderMonthSummary(monthList);
-
+ 
     var filtered = monthList.filter(function(tx){
       return state.filter === 'todos' || tx.type === state.filter;
     });
-
+ 
     var container = document.getElementById('historialList');
     container.innerHTML = '';
-
+ 
     if(filtered.length === 0){
       container.innerHTML = '<div class="empty-state">Sin movimientos en este período.</div>';
       return;
     }
-
+ 
     // group by date
     var groups = {};
     filtered.forEach(function(tx){
       if(!groups[tx.date]) groups[tx.date] = [];
       groups[tx.date].push(tx);
     });
-
+ 
     var dates = Object.keys(groups).sort(function(a,b){ return b.localeCompare(a); });
-
+ 
     dates.forEach(function(dateStr){
       var dayTx = groups[dateStr].sort(function(a,b){ return b.createdAt - a.createdAt; });
       var dayTotals = computeTotals(dayTx);
       var net = dayTotals.remanente;
-
+ 
       var group = document.createElement('div');
       group.className = 'day-group';
-
+ 
       var header = document.createElement('div');
       header.className = 'day-header';
       var d = new Date(dateStr + 'T00:00:00');
@@ -708,31 +708,31 @@
       header.innerHTML = '<span class="day-name">' + dayName + '</span>' +
         '<span class="day-net ' + (net >= 0 ? 'pos' : 'neg') + '">' + fmt(net) + '</span>';
       group.appendChild(header);
-
+ 
       dayTx.forEach(function(tx){
         group.appendChild(buildItemRow(tx));
       });
-
+ 
       container.appendChild(group);
     });
   }
-
+ 
   // ---------- Actions ----------
   function setType(type){
     state.type = type;
     state.category = CATEGORIES[type][0];
-
+ 
     document.getElementById('segGasto').classList.toggle('active', type === 'gasto');
     document.getElementById('segIngreso').classList.toggle('active', type === 'ingreso');
-
+ 
     var submitBtn = document.getElementById('submitBtn');
     submitBtn.classList.remove('type-gasto','type-ingreso');
     submitBtn.classList.add('type-' + type);
     submitBtn.textContent = type === 'gasto' ? 'Registrar gasto' : 'Registrar ingreso';
-
+ 
     renderChips();
   }
-
+ 
   async function addTransaction(){
     var amountInput = document.getElementById('amountInput');
     var amount = parseFloat(amountInput.value);
@@ -742,7 +742,7 @@
     }
     var dateVal = document.getElementById('dateInput').value || todayISO();
     var note = document.getElementById('noteInput').value.trim();
-
+ 
     var tx = {
       id: Date.now() + '-' + Math.random().toString(36).slice(2,7),
       type: state.type,
@@ -752,20 +752,20 @@
       date: dateVal,
       createdAt: Date.now()
     };
-
+ 
     state.transactions.push(tx);
     await saveData();
-
+ 
     amountInput.value = '';
     document.getElementById('noteInput').value = '';
-
+ 
     renderSummary();
     renderTodayList();
     renderHistorialList();
     showToast(tx.type === 'gasto' ? 'Gasto registrado' : 'Ingreso registrado');
     amountInput.focus();
   }
-
+ 
   async function deleteTransaction(id){
     if(!confirm('¿Eliminar este movimiento?')) return;
     state.transactions = state.transactions.filter(function(tx){ return tx.id !== id; });
@@ -775,7 +775,7 @@
     renderHistorialList();
     showToast('Eliminado');
   }
-
+ 
   function switchView(view){
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
     document.getElementById('view-' + view).classList.add('active');
@@ -783,7 +783,7 @@
       t.classList.toggle('active', t.dataset.view === view);
     });
   }
-
+ 
   // ---------- Ticket edge (signature element) ----------
   function drawTicketEdge(){
     var edge = document.getElementById('ticketEdge');
@@ -800,22 +800,22 @@
     points.push('100% 0%');
     edge.style.clipPath = 'polygon(' + points.join(',') + ')';
   }
-
+ 
   // ---------- Init ----------
   async function init(){
     document.getElementById('dateInput').value = todayISO();
-
+ 
     document.getElementById('segGasto').addEventListener('click', function(){ setType('gasto'); });
     document.getElementById('segIngreso').addEventListener('click', function(){ setType('ingreso'); });
     document.getElementById('submitBtn').addEventListener('click', addTransaction);
     document.getElementById('amountInput').addEventListener('keydown', function(e){
       if(e.key === 'Enter') addTransaction();
     });
-
+ 
     document.querySelectorAll('.tab').forEach(function(t){
       t.addEventListener('click', function(){ switchView(t.dataset.view); });
     });
-
+ 
     document.getElementById('prevMonth').addEventListener('click', function(){
       state.monthCursor.setMonth(state.monthCursor.getMonth() - 1);
       renderMonthNav();
@@ -826,7 +826,7 @@
       renderMonthNav();
       renderHistorialList();
     });
-
+ 
     document.querySelectorAll('.filter-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -835,9 +835,9 @@
         renderHistorialList();
       });
     });
-
+ 
     window.addEventListener('resize', drawTicketEdge);
-
+ 
     await loadData();
     renderChips();
     renderSummary();
@@ -846,7 +846,7 @@
     renderHistorialList();
     drawTicketEdge();
   }
-
+ 
   init();
 })();
 </script>

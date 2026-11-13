@@ -1,7 +1,13 @@
 # Mike Tracker — Plan Físico
 
-App web (PWA) para registrar el plan de 12 semanas: peso, cintura, sueño, comidas, entrenamientos A/B/C, yoga y progreso.
-Funciona sin internet y se instala en el celular como una app.
+App web (PWA) para registrar el plan de 12 semanas.
+
+- **Hoy:** anillos del día, sueño por horario, medidas con selector tipo Digital Crown, varias actividades por día y check-in con 14 preguntas más comentarios.
+- **Entreno:** sesiones A/B/C o libres, con los pesos de la vez pasada ya llenos y avance en puntos.
+- **Comida:** medidores de macros, metas por comida, tabla de opciones, alimentos propios y cálculo a partir de texto.
+- **Cuerpo:** holograma 3D por porcentajes, mosaico de músculos, recomendaciones y diccionario sin internet.
+- **Progreso:** plan de 12 semanas, calendario de constancia, estadísticas, puntos de interés (correlaciones) y registro por semana.
+- **Ajustes (⚙):** tema claro/oscuro, sistema métrico o imperial (y unidades por medida), matriz de semana y semanas guardadas, sesiones y actividades personalizables, perfil con cálculo de calorías, alimentos con detección automática de grupo, datos y Google Sheets.
 
 ## Archivos
 
@@ -11,7 +17,11 @@ Funciona sin internet y se instala en el celular como una app.
 | `manifest.json` | Nombre, colores e íconos para instalarla |
 | `sw.js` | Service worker: permite usarla sin internet |
 | `icon-192.png`, `icon-512.png` | Íconos |
+| `vendor/three.min.js` | Librería 3D (three.js r128, licencia MIT) para el modelo muscular; local para que funcione sin internet |
+| `google-apps-script.gs` | Script para copiar tus datos a Google Sheets (opcional) |
 | `.nojekyll` | Le dice a GitHub Pages que sirva los archivos tal cual |
+
+**Importante:** sube también la carpeta `vendor/` con su contenido (arrastra la carpeta completa en GitHub). Sin ella, la pestaña Músculos intenta cargar la librería desde internet.
 
 ## Subirla a GitHub Pages (desde el navegador, sin terminal)
 
@@ -67,3 +77,11 @@ Luego haz el paso 6 de arriba.
 | No aparece "Instalar" | Debe abrirse por `https://...github.io/...`, no como archivo; recarga una vez |
 | No ves tus cambios | Sube la versión en `sw.js` y reabre la app |
 | Íconos no salen | Revisa que los `.png` se hayan subido con el mismo nombre |
+
+## Guardar tus datos para analizarlos (Google Sheets)
+
+1. Abre `google-apps-script.gs`; los 6 pasos vienen al inicio del archivo.
+2. Al terminar tendrás una hoja con pestañas **Semanas, Dias, Series y Comidas**, que se actualiza cada vez que das "Enviar ahora" o una vez al día si activas "Envío diario".
+3. Con esa hoja puedes practicar análisis de datos: tablas dinámicas, gráficas, o conectarla a Looker Studio (gratis) o Power BI.
+
+Tus datos siempre viven primero en el teléfono. Sheets es una copia, y el respaldo JSON sirve para restaurarlos.

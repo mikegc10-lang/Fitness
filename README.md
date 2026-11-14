@@ -4,7 +4,7 @@ App web (PWA) para registrar el plan de 12 semanas.
 
 - **Hoy:** anillos del día, sueño por horario, medidas con selector tipo Digital Crown, varias actividades por día y check-in con 14 preguntas más comentarios.
 - **Entreno:** sesiones A/B/C o libres, con los pesos de la vez pasada ya llenos y avance en puntos.
-- **Comida:** medidores de macros, metas por comida, tabla de opciones, alimentos propios y cálculo a partir de texto.
+
 - **Cuerpo:** holograma 3D por porcentajes, mosaico de músculos, recomendaciones y diccionario sin internet.
 - **Progreso:** plan de 12 semanas, calendario de constancia, estadísticas, puntos de interés (correlaciones) y registro por semana.
 - **Ajustes (⚙):** tema claro/oscuro, sistema métrico o imperial (y unidades por medida), matriz de semana y semanas guardadas, sesiones y actividades personalizables, perfil con cálculo de calorías, alimentos con detección automática de grupo, datos y Google Sheets.

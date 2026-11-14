@@ -282,6 +282,46 @@ details.wk summary{color:var(--tx);font-size:14px;padding:8px 0}
 .liq-panel{margin-top:10px}
 .liq-dial{width:190px;height:190px}
 .liq-dv{font-size:36px;font-weight:300;font-variant-numeric:tabular-nums;font-family:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,sans-serif}
+.anat-leg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.anat-leg button{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;font-size:12px;background:var(--card2,rgba(127,127,127,.08));border:1px solid var(--line);color:var(--tx)}
+.anat-leg button i{width:10px;height:10px;border-radius:3px;box-shadow:0 0 8px currentColor}
+.anat-leg button.sel{border-color:var(--ac);box-shadow:0 0 0 2px color-mix(in srgb,var(--ac) 30%,transparent)}
+.wk-h,.wk-r{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.wk-h span{font-size:11px;font-weight:700;color:var(--mut);text-align:center;padding-bottom:2px}
+.wk-r{margin-top:4px}
+.wk-c{height:34px;padding:0 2px;border-radius:10px;font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px dashed var(--line);background:transparent;color:var(--mut);animation:wkIn .35s cubic-bezier(.2,1.4,.4,1) both;transition:transform .15s}
+.wk-c:active{transform:scale(.9)}
+.wk-c.k-fuerza,.pick .k-fuerza.on{border:1px solid var(--blue);background:color-mix(in srgb,var(--blue) 16%,transparent);color:var(--blue)}
+.wk-c.k-act,.pick .k-act.on{border:1px solid var(--vio);background:color-mix(in srgb,var(--vio) 16%,transparent);color:var(--vio)}
+.wk-c.k-suave,.pick .k-suave.on{border:1px solid var(--ac);background:var(--acs);color:var(--ac)}
+.wk-c.k-desc{border:1px solid var(--line);background:var(--card2);color:var(--mut)}
+@keyframes wkIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.wk-add{display:block;width:100%;margin-top:6px;height:28px;border-radius:10px;border:1px dashed var(--line);background:transparent;color:var(--ac);font-size:18px;line-height:1;padding:0}
+.pchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pchip{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card2)}
+.pchip button{border:0;background:transparent;border-radius:0;padding:6px 10px;font-size:12.5px;min-height:0}
+.pchip button.x{padding:6px 9px 6px 2px;color:var(--mut)}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pick button{padding:10px 8px;font-size:13px;border-radius:12px;text-align:left}
+.fx{flex-direction:column;align-items:stretch;gap:10px}
+.fx-top{display:flex;align-items:center;gap:12px}
+.fx-k{font-size:24px;font-weight:800;letter-spacing:-.5px;display:inline}.fx-u{font-size:13px;color:var(--mut);margin-left:6px}
+.fx-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--track);gap:2px}
+.fx-bar i{display:block;height:100%;width:var(--w);animation:fxGrow .9s cubic-bezier(.2,.9,.3,1) both}
+.fx-bar i.c{animation-delay:.12s}.fx-bar i.f{animation-delay:.24s}
+@keyframes fxGrow{from{width:0}to{width:var(--w)}}
+.fx .p{--fc:var(--blue)}.fx .c{--fc:#f5a524}.fx .f{--fc:var(--vio)}
+.fx-bar i{background:var(--fc)}
+.fx-m{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.fx-i{border-radius:12px;padding:7px 8px;background:color-mix(in srgb,var(--fc) 10%,transparent);border-left:3px solid var(--fc);animation:wkIn .45s cubic-bezier(.2,1.3,.4,1) both}
+.fx-i b{display:block;font-size:15px;color:var(--tx)}.fx-i span{display:block;font-size:11.5px;color:var(--fc);font-weight:600}.fx-i small{display:block;font-size:10.5px;color:var(--mut)}
+.cst{display:flex;align-items:center;gap:12px;padding-top:12px;padding-bottom:12px}
+.cst-l b,.cst-r b{display:block;font-size:20px;font-weight:800;line-height:1.1}.cst-l span,.cst-r span{display:block;font-size:10.5px;color:var(--mut);line-height:1.2}
+.cst-r{text-align:center}
+.cst-bars{flex:1;display:flex;align-items:flex-end;gap:2px;height:40px}
+.cst-bars i{flex:1;height:var(--h);border-radius:3px;background:var(--ac);animation:cstUp .6s cubic-bezier(.2,1.2,.4,1) both;transform-origin:bottom}
+.cst-bars i.today{outline:2px solid var(--ac);outline-offset:1px}
+@keyframes cstUp{from{transform:scaleY(0)}to{transform:none}}
 </style>
 </head>
 <body>
@@ -965,20 +1005,21 @@ function build3D(){
     // unir normales de la costura
     const n=geo.attributes.normal; for(let i=0;i<=rows;i++){ const a=i*W, b=i*W+cols; const v=V(n.getX(a)+n.getX(b),n.getY(a)+n.getY(b),n.getZ(a)+n.getZ(b)).normalize(); n.setXYZ(a,v.x,v.y,v.z); n.setXYZ(b,v.x,v.y,v.z); }
     const reg=[]; for(let i=0;i<rows;i++) for(let j=0;j<cols;j++) reg.push(regFn?regFn((i+.5)/rows,(j+.5)/cols):null);
+    const grp=reg.map(r=>r?anatGroup(r):null);
     const border=reg.map((r,k)=>{ const i=Math.floor(k/cols), j=k%cols; const nb=[[i-1,j],[i+1,j],[i,(j+1)%cols],[i,(j-1+cols)%cols]];
       return nb.some(([a,b])=>a>=0&&a<rows&&reg[a*cols+b]!==r); });
     geo=geo.toNonIndexed(); const cnt=geo.attributes.position.count; geo.setAttribute("color",new T.Float32BufferAttribute(new Float32Array(cnt*3),3));
-    const faceReg=[], faceBorder=[]; for(let k=0;k<reg.length;k++){ faceReg.push(reg[k],reg[k]); faceBorder.push(border[k],border[k]); }
-    const mesh=new T.Mesh(geo,mat); mesh.userData.faceReg=faceReg; mesh.userData.faceBorder=faceBorder; root.add(mesh); M3.parts.push(mesh); return mesh;
+    const faceReg=[], faceSub=[], faceBorder=[]; for(let k=0;k<reg.length;k++){ faceReg.push(grp[k],grp[k]); faceSub.push(reg[k],reg[k]); faceBorder.push(border[k],border[k]); }
+    const mesh=new T.Mesh(geo,mat); mesh.userData.faceReg=faceReg; mesh.userData.faceSub=faceSub; mesh.userData.faceBorder=faceBorder; root.add(mesh); M3.parts.push(mesh); return mesh;
   }
   // ---------- TORSO ----------
   // y, mitad del ancho, profundidad frontal, profundidad dorsal
-  const TK=[[0.835,.125,.075,.080],[0.88,.158,.092,.11],[0.95,.168,.100,.12],[1.02,.147,.104,.092],[1.08,.139,.108,.088],[1.15,.147,.112,.092],
-            [1.22,.166,.118,.103],[1.30,.182,.126,.105],[1.37,.188,.112,.101],[1.42,.174,.088,.094],[1.46,.124,.062,.074],[1.49,.074,.052,.060],[1.515,.058,.048,.050]];
+  const TK=[[0.835,.125,.075,.080],[0.88,.158,.092,.11],[0.95,.168,.100,.12],[1.02,.142,.102,.09],[1.08,.133,.106,.086],[1.15,.145,.112,.092],
+            [1.22,.172,.12,.106],[1.30,.195,.13,.108],[1.37,.2,.115,.104],[1.42,.185,.09,.097],[1.46,.124,.062,.074],[1.49,.074,.052,.060],[1.515,.058,.048,.050]];
   const y0=.835,y1=1.515;
   function torsoBump(y,x,front,th){ let b=0; const ax=Math.abs(x), at=Math.abs(th);
     if(front){
-      b+=.021*g(ax,.088,.05)*g(y,1.32,.048);                                   // pectorales
+      b+=.024*g(ax,.09,.052)*g(y,1.32,.048);                                   // pectorales
       const yl=1.255+.05*Math.pow(Math.min(ax,.17)/.17,2); if(ax>.015&&ax<.17) b-=.007*g(y,yl,.008);   // borde inferior del pecho
       const ycl=1.432-.028*Math.min(ax,.16)/.16; if(ax>.02&&ax<.16) b+=.004*g(y,ycl,.007); // clavículas
       b-=.005*g(x,0,.007)*(y>1.22&&y<1.43?1:0);                               // esternón
@@ -987,11 +1028,11 @@ function build3D(){
       b+=.006*g(ax,.128,.022)*g(y,1.05,.05);                                   // oblicuos externos
       if(at>1.05&&at<1.45) [1.155,1.19,1.225].forEach(h=>b+=.0035*g(y,h,.011)*g(at,1.25,.12)); // dedos del serrato
     } else {
-      b+=.022*g(at,2.0,.38)*g(y,1.25,.09);                                     // dorsales
+      b+=.027*g(at,2.0,.38)*g(y,1.25,.09);                                     // dorsales
       b+=.009*g(ax,.12,.025)*g(y,1.31,.03);                                    // redondo mayor
       b+=.007*g(ax,.036,.013)*g(y,1.08,.08)-.007*g(x,0,.009)*(y>.97&&y<1.44?1:0); // erectores y columna
       b+=.009*g(ax,.078,.034)*g(y,1.335,.04)-.004*g(ax,.048,.007)*g(y,1.33,.05); // omóplatos
-      b+=.007*g(ax,.055,.05)*g(y,1.42,.035);                                   // trapecio
+      b+=.012*g(ax,.06,.055)*g(y,1.425,.035);                                   // trapecio
       b-=.006*g(ax,.036,.009)*g(y,.99,.012);                                   // hoyuelos lumbares
       b+=.038*g(ax,.08,.06)*g(y,.912,.058)+.013*g(ax,.14,.03)*g(y,.96,.04)-.015*g(x,0,.009)*(y<.97?1:0); // glúteos
       b-=.012*g(y,.855,.012)*(ax<.13?1:0);                                     // pliegue del glúteo
@@ -1000,31 +1041,36 @@ function build3D(){
   function torsoPos(u,v){ const y=y0+(y1-y0)*u; const th=v*2*Math.PI-Math.PI; const [w,dF,dB]=interp(TK,y);
     const front=Math.cos(th)>=0; const d=front?dF:dB; let x=w*Math.sin(th), z=d*Math.cos(th);
     const n=V(x/(w*w),0,z/(d*d)).normalize(); const b=torsoBump(y,x,front,th); return V(x+n.x*b,y,z+n.z*b); }
-  function torsoReg(u,v){ const y=y0+(y1-y0)*u; const th=v*2*Math.PI-Math.PI; const a=Math.abs(th); const w=interp(TK,y)[0]; const x=Math.abs(Math.sin(th))*w;
-    if(y>1.445) return a>1.05?"trapecio":null;
+  const LR=x=>x<0?"_L":"_R";
+  const TW=[[1.12,0],[1.22,.045],[1.33,.10],[1.40,.15],[1.45,.21]];
+  function torsoReg(u,v){ const y=y0+(y1-y0)*u; const th=v*2*Math.PI-Math.PI; const a=Math.abs(th); const w=interp(TK,y)[0]; const sx=Math.sin(th)*w, x=Math.abs(sx); const sd=LR(sx);
     if(a<Math.PI/2){
-      if(y>=1.235+.07*Math.pow(x/.17,2)&&y<=1.425&&x>.012&&a<1.35) return "pecho";
-      if(y>=1.13&&y<1.25&&a>=1.05&&a<1.42) return "serrato";
-      if(y>=1.2&&y<1.40&&a>=1.3) return "dorsal";
-      if(y<1.235&&y>.93&&x<.073&&a<.62) return "abdomen";
-      if(y<1.235&&y>.93) return "oblicuos";
-      if(y<=.93&&y>.89&&x<.055) return "abdomen";
-      if(y<1.0&&y>=.89&&a>1.2) return "gluteoMed";
+      if(y>1.445) return a>1.05?"trapSup":null;
+      if(y>=1.235+.07*Math.pow(x/.17,2)&&y<=1.425&&x>.012&&a<1.35) return y>1.372?"pecClav"+sd:"pecEst"+sd;
+      if(y>=1.2&&y<1.40&&a>=1.33) return "dorsal";
+      if(y>=1.125&&y<1.265){ const saw=Math.abs(((y-1.125)/.035)%1-.5)*2; if(a>=1.0+.2*saw&&a<1.42) return "serrato"; }
+      if(y<1.235&&y>.93&&x<.073&&a<.62){ if(x<.004) return null; const n=y>=1.19?1:y>=1.13?2:y>=1.07?3:4; return "abd"+n+sd; }
+      if(y<1.235&&y>.935) return "obl"+sd;
+      if(y<=.93&&y>.89&&x<.055) return "abd5"+sd;
+      if(y<1.0&&y>=.89&&a>1.2) return "gmed"+sd;
       return null;
     }
-    if(y>=1.38) return "trapecio";
-    if(y>=1.22&&x<.10&&a>2.0) return "espMedia";
-    if(y>=1.12&&y<1.22&&x<.035) return "espMedia";
-    if(y>=.97&&y<1.12&&x<.05&&a>2.3) return "espBaja";
-    if(y>=1.02&&y<1.38) return "dorsal";
-    if(y<1.0&&y>=.9&&a<1.95) return "gluteoMed";
-    if(y<1.0) return "gluteos";
-    return "espBaja";
+    // espalda
+    const tw=interp(TW,y)[0];
+    if(y>=1.12&&x<tw&&x>.004) return y>=1.385?"trapSup":y>=1.27?"trapMed"+sd:"trapInf"+sd;
+    if(y>1.445) return "trapSup";
+    if(Math.pow((x-.097)/.052,2)+Math.pow((y-1.30)/.062,2)<1) return "infra"+sd;
+    if(Math.pow((x-.138)/.04,2)+Math.pow((y-1.232)/.03,2)<1) return "redondo"+sd;
+    if(y>=.975&&y<1.17&&x<.052){ if(x<.006) return null; return "erector"+sd; }
+    if(y>=1.0&&y<1.36) return y>1.27&&x<.15?"infra"+sd:"dorsal"+sd;
+    if(y<1.0){ if(y>.955&&x<.045) return null; if(x<.006) return null;
+      if(y>.925&&a<2.35) return "gmed"+sd; if(a<1.85&&y>.88) return "gmed"+sd; return "gmax"+sd; }
+    return null;
   }
   gridMesh(150,144,torsoPos,torsoReg,true);
   // ---------- CUELLO Y CABEZA ----------
-  gridMesh(26,64,(u,v)=>{ const y=1.48+.15*u, th=v*2*Math.PI-Math.PI; const ln=.25+1.25*u; const r=.063-.009*u+.006*(g(th,ln,.2)+g(th,-ln,.2))*Math.sin(Math.PI*u)+.003*g(th,0,.25)*g(u,.55,.12); return V(r*Math.sin(th),y,.008*u+r*.92*Math.cos(th)); },
-    (u,v)=>{ const th=v*2*Math.PI-Math.PI; return (u<.45&&Math.abs(th)>1.4)?"trapecio":null; },true);
+  gridMesh(26,64,(u,v)=>{ const y=1.48+.15*u, th=v*2*Math.PI-Math.PI; const ln=.25+1.25*u; const r=.069-.011*u+.006*(g(th,ln,.2)+g(th,-ln,.2))*Math.sin(Math.PI*u)+.003*g(th,0,.25)*g(u,.55,.12); return V(r*Math.sin(th),y,.008*u+r*.92*Math.cos(th)); },
+    (u,v)=>{ const th=v*2*Math.PI-Math.PI, at=Math.abs(th); if(u<.5&&at>1.45) return "trapSup"; const ln=.25+1.25*u; if(u<.92&&Math.abs(at-ln)<.2) return "ecm"+(th<0?"_L":"_R"); return null; },true);
   gridMesh(72,84,(u,v)=>{ const ph=u*Math.PI, th=v*2*Math.PI-Math.PI; const s=Math.sin(ph);
       const jaw = u>.62? 1-.22*Math.pow((u-.62)/.38,1.5) : 1;
       const at=Math.abs(th); let d=0;
@@ -1047,12 +1093,15 @@ function build3D(){
   }
   const blob=(c,r,side,regKey)=>gridMesh(18,24,(u,v)=>{ const ph=u*Math.PI, th=v*2*Math.PI-Math.PI; return V(c.x+r[0]*Math.sin(ph)*Math.sin(th), c.y+r[1]*Math.cos(ph), c.z+r[2]*Math.sin(ph)*Math.cos(th)); },()=>regKey||null,side<0?false:false);
   [-1,1].forEach(s=>{
-    const S=V(s*.197,1.425,-.008), E=V(s*.265,1.135,-.022), W=V(s*.307,.885,.018);
+    const S=V(s*.207,1.425,-.008), E=V(s*.276,1.135,-.022), W=V(s*.318,.885,.018);
     // Brazo: deltoides, bíceps, tríceps
-    limb(S,E,s,-.14,1.0,[[-.14,.013,.013],[-.07,.05,.05],[.04,.066,.062],[.2,.062,.056],[.36,.052,.051],[.55,.05,.053],[.75,.045,.047],[.92,.039,.038],[1,.036,.035]],
-      (t,th)=>{ if(t>.9) return null; const tl=.30+.12*Math.max(0,Math.sin(th));
+    limb(S,E,s,-.14,1.0,[[-.14,.013,.013],[-.07,.054,.054],[.04,.072,.068],[.2,.067,.06],[.36,.056,.055],[.55,.054,.057],[.75,.048,.05],[.92,.039,.038],[1,.036,.035]],
+      (t,th)=>{ if(t>.9) return null; const tl=.30+.12*Math.max(0,Math.sin(th)), at=Math.abs(th);
         if(t<tl){ if(th<-.7&&th>-2.3) return t<.05?"deltF":null; if(th>=-.7&&th<.75) return "deltF"; if(th>=.75&&th<2.2) return "deltL"; return "deltP"; }
-        return Math.cos(th)>-.05?"biceps":"triceps"; },
+        if(t>.55&&th>1.15&&th<1.8) return "braquial";
+        if(Math.cos(th)>-.05){ if(t>.84) return null; return th>=0?"bicLargo":"bicCorto"; }
+        if(t>.8&&at>2.3) return null;
+        return th>0?"triLat":"triLargo"; },
       (t,th)=>{ const at=Math.abs(th), tl=.30+.12*Math.max(0,Math.sin(th)); let b=0;
         b+=.009*g(t,.1,.09)+.004*g(t,.12,.08)*Math.max(0,Math.sin(th));   // deltoides
         b-=.005*g(t,tl,.018)*(t>.1?1:0);                                  // surco del deltoides
@@ -1061,15 +1110,19 @@ function build3D(){
         b-=.004*g(at,Math.PI/2,.14)*g(t,.62,.16);                         // separación bíceps/tríceps
         return b; },90,64);
     // Antebrazo
-    limb(E,W,s,-.05,1.02,[[-.05,.034,.033],[.15,.043,.04],[.4,.038,.035],[.7,.03,.027],[1.02,.024,.019]],(t)=>t<.88?"antebrazo":null,(t,th)=>.008*g(t,.18,.12)*g(th,.95,.55)+.005*g(t,.25,.14)*g(th,-.8,.6)-.002*g(t,.95,.04),70,48);
+    limb(E,W,s,-.05,1.02,[[-.05,.036,.035],[.15,.046,.042],[.4,.04,.036],[.7,.03,.027],[1.02,.024,.019]],(t,th)=>{ if(t>.88) return null; if(th>.25&&th<1.35&&t<.6) return "braqRad"; if(th<=.25&&th>-2.1) return "flexores"; return "extensores"; },(t,th)=>.008*g(t,.18,.12)*g(th,.95,.55)+.005*g(t,.25,.14)*g(th,-.8,.6)-.002*g(t,.95,.04),70,48);
     // Mano
-    gridMesh(16,20,(u,v)=>{ const ph=u*Math.PI, th=v*2*Math.PI-Math.PI; return V(s*.322+.026*Math.sin(ph)*Math.sin(th), .80+.085*Math.cos(ph), .026+.045*Math.sin(ph)*Math.cos(th)); },null,true);
+    gridMesh(16,20,(u,v)=>{ const ph=u*Math.PI, th=v*2*Math.PI-Math.PI; return V(s*.333+.026*Math.sin(ph)*Math.sin(th), .80+.085*Math.cos(ph), .026+.045*Math.sin(ph)*Math.cos(th)); },null,true);
     // Muslo: cuádriceps, isquios, glúteo inferior
     const H=V(s*.093,.905,0), K=V(s*.102,.50,.02), A=V(s*.106,.085,-.004);
     limb(H,K,s,-.08,1.0,[[-.08,.095,.1],[.05,.1,.1],[.2,.096,.094],[.45,.085,.082],[.7,.071,.067],[.88,.055,.053],[1,.05,.048]],
-      (t,th)=>{ if(t>.9) return null; if(t<.1&&Math.cos(th)<-.3) return "gluteos";
-        if(th>=-.5&&th<=1.75) return "cuads"; if(t>.6&&th<-.5&&th>-1.4) return "cuads";
-        if(th>2.0||th<-2.0) return t>.08?"isquios":"gluteos"; if(th<-.5&&th>-2.0&&t>.04) return "aductores"; return null; },
+      (t,th)=>{ const sd=s<0?"_L":"_R"; if(t<.1&&Math.cos(th)<-.3) return "gmax"+sd; if(t>.93) return null;
+        if(t>.88) return Math.abs(th)<.6?null:Math.abs(th)>2.0?null:th>0?"vLat":"vMed";
+        if(th>=-.38&&th<=.45) return "recto";
+        if(th>.45&&th<=2.05) return "vLat";
+        if(th<-.38&&th>-1.25&&t>.52) return "vMed";
+        if(th>2.05) return "bicFem"; if(th<-2.05) return "semiT";
+        if(th<-1.85) return "gracil"; return t>.04?"aduct":null; },
       (t,th)=>{ const at=Math.abs(th); let b=0;
         b+=.007*g(th,0,.42)*g(t,.45,.2);                                  // recto femoral
         b+=.011*g(th,1.2,.42)*g(t,.45,.2);                                // vasto lateral
@@ -1081,7 +1134,11 @@ function build3D(){
         return b; },100,72);
     // Pierna: pantorrilla
     limb(K,A,s,-.03,1.0,[[-.03,.05,.049],[.1,.05,.05],[.28,.055,.056],[.5,.046,.046],[.75,.034,.032],[.92,.027,.027],[1,.026,.027]],
-      (t,th)=>{ const c=Math.cos(th); if(c<-.2&&t>.04&&t<.72) return "pantorrillas"; if(c<.2&&t>.04&&t<.8&&Math.abs(th)>1.4) return "pantorrillas"; if(c>.3&&t>.05&&t<.82) return "tibial"; return null; },
+      (t,th)=>{ const at=Math.abs(th); if(t<.04||t>.86) return null;
+        if(at>2.0){ if(th<0&&t<.62) return "gasMed"; if(th>0&&t<.52) return "gasLat"; return t<.8?"soleo":null; }
+        if(at>1.45&&t>.18&&t<.82) return "soleo";
+        if(th>1.0&&th<=1.45) return "peroneo";
+        if(th>.08&&th<=1.0&&t<.82) return "tibAnt"; return null; },
       (t,th)=>{ const at=Math.abs(th); let b=0;
         b+=.015*g(t,.3,.1)*g(th,-2.55,.55)+.011*g(t,.24,.09)*g(th,2.55,.55); // gemelos (dos cabezas)
         b+=.005*g(t,.55,.12)*g(at,1.7,.45);                               // sóleo
@@ -1110,7 +1167,8 @@ function pick(e){
   const v=new T.Vector2(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
   const rc=new T.Raycaster(); rc.setFromCamera(v,M3.cam);
   const hits=rc.intersectObjects(M3.parts,false);
-  const h=hits[0]; mSel = h&&h.faceIndex!=null? (h.object.userData.faceReg[h.faceIndex]||null) : null; render();
+  const h=hits[0]; const fi=h&&h.faceIndex!=null?h.faceIndex:null; const sub=fi!=null?h.object.userData.faceSub[fi]:null;
+  mSel = fi!=null? (h.object.userData.faceReg[fi]||null) : null; mSub = sub? anatBase(sub) : null; if(!mSel&&!(M3.anat&&mSub)) mSub=null; render();
 }
 function paint3D(A){
   if(!M3.ready) return; const T=THREE;
@@ -1268,6 +1326,31 @@ function exMapEditor(name){
   $("#emO").onclick=()=>{ const o={}; document.querySelectorAll("[data-emm]").forEach(s=>{ const v=Number(s.value); if(v>0) o[s.dataset.emm]=v; }); Store.config.exMap[name]=o; saveConfig(); closeModal(); render(); };
 }
 
+/* ===== Músculos anatómicos: id -> [grupo de carga, nombre, color] ===== */
+const ANAT={
+  pecClav:["pecho","Pectoral mayor · porción clavicular","#ffa3c4"], pecEst:["pecho","Pectoral mayor · porción esternal","#ff3d6e"],
+  deltF:["deltF","Deltoides anterior","#ff8c2e"], deltL:["deltL","Deltoides lateral","#ffb347"], deltP:["deltP","Deltoides posterior","#ffd27a"],
+  infra:["deltP","Infraespinoso (manguito rotador)","#ffd98a"],
+  trapSup:["trapecio","Trapecio superior","#c58bff"], trapMed:["espMedia","Trapecio medio","#9a6bff"], trapInf:["espMedia","Trapecio inferior","#7b52f0"],
+  dorsal:["dorsal","Dorsal ancho","#2f7dff"], redondo:["dorsal","Redondo mayor","#6aa8ff"],
+  erector:["espBaja","Erectores de la columna","#3fd6ff"],
+  bicLargo:["biceps","Bíceps · cabeza larga","#19e3ff"], bicCorto:["biceps","Bíceps · cabeza corta","#68f0ff"], braquial:["biceps","Braquial","#0fb5d6"],
+  triLat:["triceps","Tríceps · cabeza lateral","#1de9b6"], triLargo:["triceps","Tríceps · cabeza larga","#0fbf92"],
+  braqRad:["antebrazo","Braquiorradial","#a6ff3d"], flexores:["antebrazo","Flexores del antebrazo","#7ee02a"], extensores:["antebrazo","Extensores del antebrazo","#c9ff6e"],
+  abd:["abdomen","Recto abdominal","#ffe14d"], obl:["oblicuos","Oblicuo externo","#ff5a36"], serrato:["serrato","Serrato anterior","#ffa58a"],
+  gmax:["gluteos","Glúteo mayor","#ff2e9a"], gmed:["gluteoMed","Glúteo medio","#ff7ad1"],
+  recto:["cuads","Recto femoral","#3dff8f"], vLat:["cuads","Vasto lateral","#14d96b"], vMed:["cuads","Vasto medial","#8affb8"], sartorio:["cuads","Sartorio","#d4ffe6"],
+  bicFem:["isquios","Bíceps femoral","#00c9a7"], semiT:["isquios","Semitendinoso y semimembranoso","#33e6c4"],
+  aduct:["aductores","Aductores","#d6f54a"], gracil:["aductores","Grácil","#eeff9a"],
+  gasMed:["pantorrillas","Gemelo medial","#4fc3ff"], gasLat:["pantorrillas","Gemelo lateral","#86d6ff"], soleo:["pantorrillas","Sóleo","#2a9df0"], peroneo:["pantorrillas","Peroneos","#5cb8e6"],
+  tibAnt:["tibial","Tibial anterior","#2fffe9"], ecm:[null,"Esternocleidomastoideo","#b9a6ff"]
+};
+let mSub=null;
+function anatBase(id){ return String(id).replace(/_[LR]$/,"").replace(/^abd\d$/,"abd"); }
+function anatGroup(id){ const b=anatBase(id); return ANAT[b]? ANAT[b][0] : (MUSCLES[b]?b:null); }
+function anatColor(id){ const b=anatBase(id); const e=ANAT[b]; if(!e) return null; const c=new THREE.Color(e[2]);
+  const m=String(id).match(/^abd(\d)/); if(m&&+m[1]%2===0) c.multiplyScalar(.8); return c; }
+function anatGroupColor(g){ const k=Object.keys(ANAT).find(x=>ANAT[x][0]===g); return k?ANAT[k][2]:"#888"; }
 function mount3D(){
   const box=document.getElementById("m3d"); if(!box) return;
   if(!M3.ready){ box.innerHTML='<div class="holo-msg">Cargando holograma…</div>';
@@ -1291,12 +1374,22 @@ function paint3D(A){
     const p=rowPct(r); if(p<=0) return new T.Color(0x0e4f66); if(bMode==="semana"&&r.week>r.M.tope) return new T.Color(0xff5fd2);
     const t=Math.min(1,p/100); return t<.5? new T.Color(0x1d6fd6).lerp(new T.Color(0x18d0e0),t/.5) : new T.Color(0x18d0e0).lerp(new T.Color(0x3dffa0),(t-.5)/.5); };
   const cols={}; A.rows.forEach(r=>{ let c=holoCol(r); if(r.m===mSel) c.lerp(new T.Color(0xffffff),.55); cols[r.m]=c; });
-  M3.parts.forEach(mesh=>{ const ca=mesh.geometry.attributes.color, fr=mesh.userData.faceReg, fb=mesh.userData.faceBorder;
-    for(let f=0;f<fr.length;f++){ const k=fr[f]; let c=k&&cols[k]?cols[k]:skin; if(k&&fb[f]) c=c.clone().lerp(line,.7); for(let q=0;q<3;q++) ca.setXYZ(f*3+q,c.r,c.g,c.b); }
+  const anat=!!M3.anat, sel=mSel||mSub;
+  M3.parts.forEach(mesh=>{ const ca=mesh.geometry.attributes.color, fr=mesh.userData.faceReg, fs=mesh.userData.faceSub||fr, fb=mesh.userData.faceBorder;
+    for(let f=0;f<fr.length;f++){ const k=fr[f], sb=fs[f]; let c;
+      if(anat){ c=sb?anatColor(sb):null; if(!c) c=skin.clone();
+        else if(sel){ const hit= mSub? anatBase(sb)===mSub : k===mSel; const grp= mSel&&k===mSel;
+          if(hit) c.lerp(new T.Color(0xffffff),.3); else if(!grp) c.multiplyScalar(.22); }
+        if(sb&&fb[f]) c.lerp(line,.62); }
+      else { c=k&&cols[k]?cols[k]:skin; if(sb&&fb[f]) c=c.clone().lerp(line,k?.7:.5); }
+      for(let q=0;q<3;q++) ca.setXYZ(f*3+q,c.r,c.g,c.b); }
     ca.needsUpdate=true; });
 }
 
 /* ================= CUERPO (mosaico + holograma) ================= */
+function anatLegend(){ const gs=[]; Object.keys(ANAT).forEach(k=>{ const g=ANAT[k][0]; if(g&&!gs.includes(g)) gs.push(g); });
+  return `<div class="anat-leg">${gs.map(g=>`<button data-msel="${g}" class="${mSel===g?"sel":""}"><i style="background:${anatGroupColor(g)}"></i>${esc(MUSCLES[g].n)}</button>`).join("")}</div>
+  <div class="small mut" style="margin-top:6px">Cada color es un músculo; las líneas oscuras separan sus cabezas o porciones. Toca uno en el cuerpo para ver su nombre.</div>`; }
 function viewCuerpo(){
   const A=analysis(); M3.lastA=A;
   const modes=[["semana","Semana"],["hoy","Hoy"],["recup","Recuperación"],["4sem","Prom. 4 sem"]];
@@ -1305,10 +1398,14 @@ function viewCuerpo(){
   let h=`<div class="card"><h2>Tu semana muscular<span class="sp"></span><span class="mut" style="text-transform:none;letter-spacing:0">del ${parseISO(A.mon).getDate()} ${MON[parseISO(A.mon).getMonth()]}</span></h2>
     <div class="kpis"><div class="kpi"><div class="v">${avgP}%</div><div class="l">Avance promedio</div></div><div class="kpi"><div class="v">${inMeta}/${A.rows.length}</div><div class="l">Músculos en meta</div></div><div class="kpi"><div class="v">${tired.rec}%</div><div class="l">${esc(tired.M.n)} (menos recuperado)</div></div></div>
     <div class="mut" style="margin-top:10px">Más trabajado: <b style="color:var(--tx)">${esc(most.M.n)} ${most.pct}%</b> · Prioridad más atrasada: <b style="color:var(--tx)">${esc(least.M.n)} ${least.pct}%</b></div></div>`;
-  h+=`<div class="card holo-card"><div class="seg" style="margin-bottom:10px">${modes.map(([k,l])=>`<button data-bmode="${k}" class="${bMode===k?"on":""}">${l}</button>`).join("")}</div>
-    <div class="holo"><div id="m3d"></div><div class="holo-scan ${M3.scanOn===false?"off":""}"></div><div class="holo-hud">${bMode==="recup"?"RECUPERACIÓN":"META SEMANAL"} · ${mSel?esc(MUSCLES[mSel].n.toUpperCase())+" "+rowPct(A.rows.find(r=>r.m===mSel))+"%":"TOCA UN MÚSCULO"}</div></div>
+  const an=!!M3.anat; const subN=mSub&&ANAT[mSub]?ANAT[mSub][1]:"";
+  const hud= an? (subN?esc(subN.toUpperCase())+(mSel?" · "+esc(MUSCLES[mSel].n)+" "+rowPct(A.rows.find(r=>r.m===mSel))+"%":""):"MAPA ANATÓMICO · TOCA UN MÚSCULO")
+    : (bMode==="recup"?"RECUPERACIÓN":"META SEMANAL")+" · "+(mSel?esc(MUSCLES[mSel].n.toUpperCase())+" "+rowPct(A.rows.find(r=>r.m===mSel))+"%":"TOCA UN MÚSCULO");
+  h+=`<div class="card holo-card"><div class="seg anat-seg" style="margin-bottom:8px"><button data-anat="0" class="${an?"":"on"}">Mapa de carga</button><button data-anat="1" class="${an?"on":""}">Mapa anatómico</button></div>
+    ${an?"":`<div class="seg" style="margin-bottom:10px">${modes.map(([k,l])=>`<button data-bmode="${k}" class="${bMode===k?"on":""}">${l}</button>`).join("")}</div>`}
+    <div class="holo"><div id="m3d"></div><div class="holo-scan ${M3.scanOn===false?"off":""}"></div><div class="holo-hud">${hud}</div></div>
     <div class="row" style="justify-content:center;margin-top:10px"><button class="sm" data-view="front">Frente</button><button class="sm" data-view="back">Espalda</button><button class="sm" data-view="side">Lado</button><button class="sm" data-view="spin">${M3.auto?"Detener giro":"Girar"}</button><button class="sm ${M3.scanOn===false?"":"on-ac"}" data-view="scan">${M3.scanOn===false?"Escáner: apagado":"Escáner: encendido"}</button></div>
-    ${bMode==="recup"?`<div class="legend" style="background:linear-gradient(90deg,#ff3d5a,#ffc24a 60%,#3dffa0)"></div><div class="row small mut" style="justify-content:space-between;margin-top:3px"><span>Fatigado</span><span>50%</span><span>100% recuperado</span></div>`
+    ${an?anatLegend():bMode==="recup"?`<div class="legend" style="background:linear-gradient(90deg,#ff3d5a,#ffc24a 60%,#3dffa0)"></div><div class="row small mut" style="justify-content:space-between;margin-top:3px"><span>Fatigado</span><span>50%</span><span>100% recuperado</span></div>`
       :`<div class="legend" style="background:linear-gradient(90deg,#1d6fd6,#18d0e0 50%,#3dffa0)"></div><div class="row small mut" style="justify-content:space-between;margin-top:3px"><span>0%</span><span>50%</span><span>100% de la meta</span></div><div class="small mut" style="margin-top:2px"><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#a98be6"></i> Pasó el tope</div>`}</div>`;
   if(mSel){ const r=A.rows.find(x=>x.m===mSel); const exs=[]; strKeys().forEach(t=>(Store.config.templates[t]||[]).forEach(e=>{ if((exMuscles(e.n)[mSel]||0)>=.5) exs.push(e.n+" ("+t+")"); }));
     const rr=recs(A).filter(x=>x.m===mSel);
@@ -1394,8 +1491,11 @@ function viewProgreso(){
     <div class="mut" style="margin-top:6px">Cada círculo se llena con las sesiones de fuerza de esa semana (3 = completa).</div></div>`;
   // Calendario
   const cw=weeks.slice(-12);
-  h+=`<div class="card"><h2>Constancia diaria</h2><div class="cal"><div class="cal-d">${["L","M","M","J","V","S","D"].map(x=>`<span>${x}</span>`).join("")}</div>${cw.map(m=>`<div class="cal-w">${[...Array(7)].map((_,i)=>{ const k=addDays(m,i); const sc=k>cur?null:dayScore(k); return `<i title="${k}" class="${k===cur?"today":""}" style="${sc==null?"":`background:color-mix(in srgb, var(--ac) ${Math.round(15+sc*85)}%, var(--card2))`}"></i>`; }).join("")}</div>`).join("")}</div>
-    <div class="row small mut" style="margin-top:8px;gap:6px">Menos <i class="calk" style="background:color-mix(in srgb, var(--ac) 20%, var(--card2))"></i><i class="calk" style="background:color-mix(in srgb, var(--ac) 55%, var(--card2))"></i><i class="calk" style="background:var(--ac)"></i> Más · combina proteína, sueño, entreno y check-in</div></div>`;
+  { const ks=[...Array(28)].map((_,i)=>addDays(cur,i-27)); const sc=ks.map(k=>dayScore(k)); const vals=sc.filter(x=>x!=null);
+    const pct=Math.round(vals.reduce((a,b)=>a+b,0)/28*100); let stk=0; for(let k=cur;Store.days[k];k=addDays(k,-1)) stk++;
+    h+=`<div class="card cst"><div class="cst-l"><b>${pct}%</b><span>Constancia<br>28 días</span></div>
+      <div class="cst-bars">${sc.map((s,i)=>`<i class="${ks[i]===cur?"today":""}" style="--h:${s==null?8:Math.round(14+s*86)}%;${s==null?"opacity:.35":""};animation-delay:${i*18}ms"></i>`).join("")}</div>
+      <div class="cst-r"><b>🔥 ${stk}</b><span>racha</span></div></div>`; }
   h+=`<div class="card chart"><h2>Peso</h2>${lineChart(S.map(w=>({v:toDisp(w.w,"w"),l:parseISO(w.mon).getDate()+" "+MON[parseISO(w.mon).getMonth()]})),"Peso",unitOf("w"),"var(--ac)")}</div>`;
   h+=`<div class="card chart"><h2>Cintura</h2>${lineChart(S.map(w=>({v:toDisp(w.waist,"len"),l:parseISO(w.mon).getDate()+" "+MON[parseISO(w.mon).getMonth()]})),"Cintura",unitOf("len"),"var(--blue)")}</div>`;
   // Estadísticas totales
@@ -1429,39 +1529,41 @@ function viewProgreso(){
 }
 
 /* ================= AJUSTES ================= */
-let wkEdit=null, wkTxt=null;
+let wkEdit=null, wkTxt=null, wkRows=0;
 function viewAjustes(){
   const c=Store.config; if(!wkEdit){ wkEdit=clone(c.week); wkTxt=clone(c.weekTxt||{}); }
   const DO=[1,2,3,4,5,6,0];
-  let h=`<div class="card"><h2>Apariencia</h2><div class="seg">${[["auto","Automático"],["claro","Claro"],["oscuro","Oscuro"]].map(([k,l])=>`<button data-theme="${k}" class="${(c.theme||"auto")===k?"on":""}">${l}</button>`).join("")}</div><div class="mut" style="margin-top:6px">Automático sigue el modo de tu celular: claro de día, oscuro de noche.</div></div>`;
+  let h=`<div class="card"><h2>Apariencia</h2><div class="seg">${[["auto","Automático"],["claro","Claro"],["oscuro","Oscuro"]].map(([k,l])=>`<button data-theme="${k}" class="${(c.theme||"auto")===k?"on":""}">${l}</button>`).join("")}</div></div>`;
   const imp=["w","load","len","mass"].every(k=>unitOf(k)===UNIT_KINDS[k].opts[1][0]), met=["w","load","len","mass"].every(k=>unitOf(k)===UNIT_KINDS[k].opts[0][0]);
-  h+=`<div class="card"><h2>Unidades</h2><div class="mut" style="margin-bottom:6px">Sistema predeterminado de toda la app</div><div class="seg" style="margin-bottom:12px"><button data-usys="met" class="${met?"on":""}">Métrico (kg, cm, L)</button><button data-usys="imp" class="${imp?"on":""}">Imperial (lb, in, oz)</button></div><div class="mut" style="margin-bottom:6px">O ajusta cada medida:</div>${[["w","Peso corporal"],["load","Peso en entreno"],["len","Medidas"],["vol","Agua"],["time","Sueño"],["mass","Comida"]].map(([k,l])=>`<div class="row" style="justify-content:space-between;margin-bottom:8px;flex-wrap:nowrap"><span>${l}</span><div class="seg" style="min-width:160px">${UNIT_KINDS[k].opts.map(o=>`<button data-unit="${k}.${o[0]}" class="${unitOf(k)===o[0]?"on":""}">${o[0]}</button>`).join("")}</div></div>`).join("")}<div class="mut">Todo se guarda en kg, cm, litros y horas, así que cambiar de unidad nunca altera tus datos.</div></div>`;
-  h+=`<div class="card"><h2>Mi semana</h2><div class="mut" style="margin-bottom:8px">Toca las casillas. Puedes poner varias actividades por día; si eliges "Otro", escribe cuál.</div>
-    <div class="mx"><table><tr><th></th>${DO.map(d=>`<th>${DOW[d]}</th>`).join("")}</tr>${ACT_ORDER.map(k=>`<tr><td>${ACTS[k].n.replace(" · ","<br><span class=\"mut\">")+(ACTS[k].n.includes(" · ")?"</span>":"")}</td>${DO.map(d=>{ const on=wkEdit[d].includes(k); return `<td><button class="mxc ${on?"on":""}" data-mx="${d}.${k}" aria-label="${ACTS[k].n} ${DOWL[d]}">${on?"●":""}</button></td>`; }).join("")}</tr>`).join("")}</table></div>
-    ${DO.filter(d=>wkEdit[d].includes("otro")).map(d=>`<div class="small" style="margin-top:6px">${DOWL[d]} · Otro: <b>${esc(wkTxt[d]||"")}</b> <button class="sm ghost" data-otxt="${d}">Editar</button></div>`).join("")}
-    <div class="row" style="margin-top:12px"><button class="pri" id="wkApply">Usar esta semana</button><button id="wkSave">Guardar como plantilla…</button></div>
-    <div class="mut" style="margin-top:6px">Los días que ya registraste no cambian.</div>
-    <div class="sep"></div><b style="font-size:13.5px">Semanas guardadas</b>
-    <div class="list">${c.presets.map(p=>`<div class="it"><div class="t">${esc(p.n)}<small>${DO.map(d=>DOW[d]+": "+p.week[d].map(k=>k==="otro"&&p.txt&&p.txt[d]?p.txt[d]:(ACTS[k]?ACTS[k].n.split(" ·")[0]:k)).join("+")).join(" · ")}</small></div><button class="sm" data-pload="${p.id}">Cargar</button>${p.id!=="plan"?`<button class="sm ghost del" data-pdel="${p.id}">✕</button>`:""}</div>`).join("")}</div></div>`;
+  h+=`<div class="card"><h2>Unidades</h2><div class="seg" style="margin-bottom:12px"><button data-usys="met" class="${met?"on":""}">Métrico (kg, cm, L)</button><button data-usys="imp" class="${imp?"on":""}">Imperial (lb, in, oz)</button></div>${[["w","Peso corporal"],["load","Peso en entreno"],["len","Medidas"],["vol","Agua"],["time","Sueño"],["mass","Comida"]].map(([k,l])=>`<div class="row" style="justify-content:space-between;margin-bottom:8px;flex-wrap:nowrap"><span>${l}</span><div class="seg" style="min-width:160px">${UNIT_KINDS[k].opts.map(o=>`<button data-unit="${k}.${o[0]}" class="${unitOf(k)===o[0]?"on":""}">${o[0]}</button>`).join("")}</div></div>`).join("")}</div>`;
+  const nRows=Math.max(5,wkRows||0,...DO.map(d=>wkEdit[d].filter(k=>k!=="descanso").length));
+  const SHN={natacion:"Nadar",yoga:"Yoga",caminata:"Camin.",ciclismo:"Bici",correr:"Correr"}; const shortN=(k,d)=>{ let n=k==="otro"&&wkTxt[d]?wkTxt[d]:SHN[k]||(ACTS[k]?ACTS[k].n.split(/ ·| \//)[0]:k); return n.length>7?n.slice(0,6)+".":n; };
+  h+=`<div class="card"><h2>Mi semana</h2>
+    <div class="wk"><div class="wk-h">${DO.map(d=>`<span>${DOW[d]}</span>`).join("")}</div>
+    ${[...Array(nRows)].map((_,r)=>`<div class="wk-r">${DO.map(d=>{ const list=wkEdit[d].filter(k=>k!=="descanso"); const k=list[r]; const rest=!list.length&&r===0;
+      return `<button class="wk-c ${k?"k-"+(ACTS[k]?ACTS[k].k:"act"):rest?"k-desc":""}" data-slot="${d}.${r}" style="animation-delay:${(r*7+DO.indexOf(d))*12}ms">${k?esc(shortN(k,d)):rest?"Desc.":"+"}</button>`; }).join("")}</div>`).join("")}
+    <button class="wk-add" id="wkRow" aria-label="Agregar fila">+</button></div>
+    <div class="row" style="margin-top:10px"><button class="pri" id="wkApply">Usar esta semana</button><button id="wkSave">Guardar…</button></div>
+    <div class="pchips">${c.presets.map(p=>`<span class="pchip"><button data-pload="${p.id}">${esc(p.n)}</button>${p.id!=="plan"?`<button class="x" data-pdel="${p.id}" aria-label="Borrar">✕</button>`:""}</span>`).join("")}</div></div>`;
   h+=`<div class="card"><h2>Fases y metas diarias</h2>${c.phases.map((p,i)=>`<div style="margin-bottom:12px"><div class="grid2"><label class="f">Nombre<input data-ph="${i}.name" value="${esc(p.name)}"></label><label class="f">Desde<input type="date" data-ph="${i}.from" value="${p.from}"></label></div>
     <div class="grid4" style="margin-top:8px"><label class="f">kcal<input inputmode="numeric" data-ph="${i}.kcal" value="${p.kcal}"></label><label class="f">Prot g<input inputmode="numeric" data-ph="${i}.P" value="${p.P}"></label><label class="f">Carb g<input inputmode="numeric" data-ph="${i}.C" value="${p.C}"></label><label class="f">Grasa g<input inputmode="numeric" data-ph="${i}.F" value="${p.F}"></label></div></div>`).join("")}
     <div class="row"><button class="sm" id="addPh">+ Fase</button>${c.phases.length>1?`<button class="sm del ghost" id="delPh">Quitar última</button>`:""}</div><div class="sep"></div>
     <div class="grid2"><label class="f">Inicio del plan<input type="date" data-cfg="start" value="${c.start}"></label><label class="f">kcal extra día de tenis<input inputmode="numeric" data-cfg="tennisExtra" data-num value="${c.tennisExtra}"></label>
     <label class="f">Meta de sueño (h)<input inputmode="decimal" data-goal="sleep" value="${c.goals.sleep}"></label><label class="f">Meta de agua (L)<input inputmode="decimal" data-goal="water" value="${c.goals.water}"></label></div></div>`;
-  h+=`<div class="card"><h2>Métricas personalizadas</h2><div class="mut" style="margin-bottom:8px">Sirven para medir algo que la app no trae. Cada métrica aparece en Hoy, se guarda cada día y sale en tus exportaciones para analizarla. Ejemplos: brazo (cm), % de grasa de tu báscula, creatina (sí/no), dolor de rodilla (escala 1–5).</div>${c.metrics.map((m,i)=>`<div class="row" style="margin-bottom:6px;flex-wrap:nowrap"><input data-met="${i}.name" value="${esc(m.name)}" style="flex:2"><input data-met="${i}.unit" value="${esc(m.unit||"")}" placeholder="unidad" style="flex:1"><select data-met="${i}.type" style="flex:1.3"><option value="number" ${m.type==="number"?"selected":""}>Número</option><option value="scale" ${m.type==="scale"?"selected":""}>Escala 1–5</option><option value="bool" ${m.type==="bool"?"selected":""}>Sí/No</option><option value="text" ${m.type==="text"?"selected":""}>Texto</option></select><button class="sm ghost del" data-metdel="${i}">✕</button></div>`).join("")}<button class="sm" id="addMet">+ Métrica</button></div>`;
-  h+=`<div class="card"><h2>Sesiones de fuerza</h2><div class="mut" style="margin-bottom:8px">Cambia el nombre de cada sesión y sus ejercicios, o crea sesiones nuevas.</div>${strKeys().map(t=>`<details><summary>${esc(ACTS[t].n)} · ${(c.templates[t]||[]).length} ejercicios</summary>
+  h+=`<div class="card"><h2>Métricas personalizadas</h2><div class="mut" style="margin-bottom:8px">Mide lo que la app no trae: brazo, % de grasa, creatina…</div>${c.metrics.map((m,i)=>`<div class="row" style="margin-bottom:6px;flex-wrap:nowrap"><input data-met="${i}.name" value="${esc(m.name)}" style="flex:2"><input data-met="${i}.unit" value="${esc(m.unit||"")}" placeholder="unidad" style="flex:1"><select data-met="${i}.type" style="flex:1.3"><option value="number" ${m.type==="number"?"selected":""}>Número</option><option value="scale" ${m.type==="scale"?"selected":""}>Escala 1–5</option><option value="bool" ${m.type==="bool"?"selected":""}>Sí/No</option><option value="text" ${m.type==="text"?"selected":""}>Texto</option></select><button class="sm ghost del" data-metdel="${i}">✕</button></div>`).join("")}<button class="sm" id="addMet">+ Métrica</button></div>`;
+  h+=`<div class="card"><h2>Sesiones de fuerza</h2>${strKeys().map(t=>`<details><summary>${esc(ACTS[t].n)} · ${(c.templates[t]||[]).length} ejercicios</summary>
       <div class="row" style="margin-top:8px;flex-wrap:nowrap"><label class="f" style="flex:1">Nombre de la sesión<input maxlength="30" data-actname="${t}" value="${esc(ACTS[t].n)}"></label>${isCustomAct(t)?`<button class="sm ghost del" style="margin-top:18px" data-actdel="${t}">Borrar</button>`:""}</div>
       ${(c.templates[t]||[]).map((e,i)=>`<div class="row" style="margin-top:8px;flex-wrap:nowrap"><input data-tpl="${t}.${i}.n" value="${esc(e.n)}" style="flex:3"><button class="sm ghost del" data-tpldel="${t}.${i}">✕</button></div><div class="grid3" style="margin-top:6px"><label class="f">Series<input inputmode="numeric" data-tpl="${t}.${i}.s" value="${e.s}"></label><label class="f">Reps mín<input inputmode="numeric" data-tpl="${t}.${i}.lo" value="${e.lo}"></label><label class="f">Reps máx<input inputmode="numeric" data-tpl="${t}.${i}.hi" value="${e.hi}"></label></div>`).join("")}<button class="sm" style="margin-top:8px" data-tpladd="${t}">+ Ejercicio</button></details>`).join("")}
     <div class="row" style="margin-top:10px"><button class="sm" id="newStr">+ Nueva sesión de fuerza</button><button class="sm ghost" id="resetTpl">Restaurar ejercicios del plan</button></div></div>`;
   h+=`<div class="card"><h2>Otras actividades</h2><div class="list">${Object.keys(ACTS).filter(k=>ACTS[k].k!=="fuerza"&&k!=="descanso"&&!ACTS[k].hidden).map(k=>`<div class="it"><input maxlength="30" data-actname="${k}" value="${esc(ACTS[k].n)}" style="flex:1"><span class="mut small" style="width:62px">${ACTS[k].k==="act"?"con tiempo":"suave"}</span>${isCustomAct(k)?`<button class="sm ghost del" data-actdel="${k}">✕</button>`:""}</div>`).join("")}</div>
-    <button class="sm" style="margin-top:8px" id="newAct">+ Nueva actividad</button><div class="mut small" style="margin-top:6px">Las actividades nuevas aparecen en Hoy y en la matriz de tu semana. Solo tenis, natación, correr, caminata, box y bici suman carga muscular en Cuerpo.</div></div>`;
+    <button class="sm" style="margin-top:8px" id="newAct">+ Nueva actividad</button></div>`;
   const inClaude=window.self!==window.top;
   h+=viewProfile();
   h+=`<div class="card"><h2>Tus datos</h2>
     <div class="store"><div><b>${Store.mode==="cloud"?"Nube de Claude":"Este celular"}</b><span>${Store.mode==="cloud"?"Privado y sincronizado entre dispositivos":"Se guarda en el navegador; respalda seguido"}</span></div><div><b>${Object.keys(Store.days).length}</b><span>días guardados</span></div></div>
     <div class="row" style="margin-top:10px"><button id="expJson">Respaldo JSON</button><button id="expCsv">Excel (CSV)</button><button id="impBtn">Importar</button></div>
     <div class="sep"></div><b style="font-size:13.5px">Google Sheets</b>
-    <div class="mut" style="margin:4px 0 8px">Copia automática de todo a una hoja de Google, con pestañas de días, series, comidas y semanas. Sirve para analizar tus datos o conectarlos después a Looker Studio o Power BI. ${inClaude?"Funciona en la versión de GitHub.":""} Los pasos están en el README.</div>
+    <div class="mut" style="margin:4px 0 8px">Copia automática a una hoja de Google.${inClaude?" Funciona en la versión de GitHub.":""}</div>
     <input id="shUrl" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(c.sheetsUrl||"")}">
     <div class="row" style="margin-top:8px"><button class="sm" id="shSave">Guardar URL</button><button class="sm pri" id="shSend">Enviar ahora</button><button class="chip ${c.sheetsAuto?"on":""}" id="shAuto">${c.sheetsAuto?"Envío diario ✓":"Envío diario"}</button></div>
     ${c.sheetsLast?`<div class="mut small" style="margin-top:6px">Último envío: ${new Date(c.sheetsLast).toLocaleString("es-MX")}</div>`:""}</div>`;
@@ -1567,7 +1669,10 @@ function viewHoy(){
   const hr=new Date().getHours(); const hi=hr<12?"Buenos días":hr<19?"Buenas tardes":"Buenas noches"; const nm=((c.profile||{}).name||"").split(" ")[0];
   let h=Store.mode!=="cloud"&&!Object.keys(Store.days).length?`<div class="banner">Tus datos se guardan en este dispositivo. En Ajustes → Tus datos puedes respaldarlos o enviarlos a Google Sheets.</div>`:"";
   // Misión del día
-  let items=missionItem(ICO.food,`Come ${fmt(t.kcal,0)} kcal`,`${t.P} g proteína · ${t.C} g carbos · ${t.F} g grasa<br><span class="mi-k">= ${fmt(t.P*4,0)} + ${fmt(t.C*4,0)} + ${fmt(t.F*9,0)} kcal</span>`,null,"food");
+  const kP=t.P*4,kC=t.C*4,kF=t.F*9,kT=kP+kC+kF||1;
+  let items=`<div class="mi food fx"><div class="fx-top"><div class="mi-ic">${ICO.food}</div><div><b class="fx-k">${fmt(t.kcal,0)}</b><span class="fx-u">kcal hoy</span></div></div>
+    <div class="fx-bar"><i class="p" style="--w:${(kP/kT*100).toFixed(1)}%"></i><i class="c" style="--w:${(kC/kT*100).toFixed(1)}%"></i><i class="f" style="--w:${(kF/kT*100).toFixed(1)}%"></i></div>
+    <div class="fx-m">${[["p","Proteína",t.P,kP],["c","Carbos",t.C,kC],["f","Grasa",t.F,kF]].map(([c,n,g,k],i)=>`<div class="fx-i ${c}" style="animation-delay:${200+i*120}ms"><b>${g} g</b><span>${n}</span><small>${fmt(k,0)} kcal</small></div>`).join("")}</div></div>`;
   if(st){ const tp=Store.config.templates[st]||[]; const w=d.workout; const done=w&&w.ex?countSets(w):0, plan=w&&w.ex?w.ex.reduce((s,e)=>s+e.sets.length,0):tp.reduce((s,e)=>s+e.s,0);
     items+=missionItem(ICO.lift,`Entrena: ${esc(ACTS[st].n)}`,`${tp.length} ejercicios · ${plan} series${done?` · llevas ${done}`:""}`,plan?done/plan:0,"lift"); }
   a.filter(x=>ACTS[x.t]&&ACTS[x.t].k==="act").forEach(x=>{ const m=num(x.min)||lastActMin(x.t); items+=missionItem(ICO.run,esc(actLabel(x)),m?`${m} min${num(x.min)?" registrados":" (como la vez pasada)"}`:"Registra los minutos abajo",null,"act"); });
@@ -1948,7 +2053,8 @@ function bind(){
   const cw=$("#clearW"); if(cw) cw.onclick=()=>confirmBox("¿Borrar toda la sesión de este día?",()=>{ setField("workout",null); render(); });
   // Cuerpo
   on("[data-bmode]","click",el=>{ bMode=el.dataset.bmode; render(); });
-  on("[data-msel]","click",(el,e)=>{ e.preventDefault(); mSel=el.dataset.msel||null; render(); if(mSel){ const hc=document.querySelector(".holo-card"); if(hc) hc.scrollIntoView({behavior:"smooth",block:"start"}); } });
+  on("[data-anat]","click",el=>{ M3.anat=el.dataset.anat==="1"; mSub=null; render(); });
+  on("[data-msel]","click",(el,e)=>{ e.preventDefault(); mSel=el.dataset.msel||null; mSub=null; render(); if(mSel){ const hc=document.querySelector(".holo-card"); if(hc) hc.scrollIntoView({behavior:"smooth",block:"start"}); } });
   on("[data-view]","click",el=>{ const v=el.dataset.view; if(v==="spin"){ M3.auto=!M3.auto; el.textContent=M3.auto?"Detener giro":"Girar"; return; } if(v==="scan"){ M3.scanOn=M3.scanOn===false; render(); return; } M3.auto=false; M3.rotY=v==="front"?0:v==="back"?Math.PI:Math.PI/2; M3.tiltX=.04; });
   on("[data-exmap]","click",el=>exMapEditor(el.dataset.exmap));
   const gs=$("#gSearch"); if(gs) gs.addEventListener("input",()=>{ gQ=gs.value; const g=document.createElement("div"); g.innerHTML=viewGlossary(); $("#gBody").innerHTML=g.querySelector("#gBody").innerHTML; });
@@ -1962,6 +2068,19 @@ function bind(){
     if(a.includes(k)){ a=a.filter(x=>x!==k); if(k==="otro") delete wkTxt[dw]; return commit(); }
     const add=()=>{ if(k==="descanso") a=[]; else a=a.filter(x=>x!=="descanso"); if(ACTS[k].k==="fuerza") a=a.filter(x=>ACTS[x].k!=="fuerza"); a.push(k); commit(); };
     if(k==="otro") otherTextModal(wkTxt[dw],txt=>{ wkTxt[dw]=txt; add(); }); else add(); });
+  on("[data-slot]","click",el=>{ const [dw,r]=el.dataset.slot.split(".").map(Number); const list=wkEdit[dw].filter(k=>k!=="descanso"); const curK=list[r];
+    const opts=ACT_ORDER.filter(k=>ACTS[k]&&!ACTS[k].hidden&&k!=="descanso");
+    openModal(`<h3 style="margin-top:0">${DOWL[dw]} · actividad ${r+1}</h3><div class="pick">${opts.map(k=>`<button class="k-${ACTS[k].k} ${k===curK?"on":""}" data-pk="${k}">${esc(ACTS[k].n)}</button>`).join("")}</div>
+      <div class="row end" style="margin-top:12px">${curK?`<button class="del ghost" data-pk="">Quitar</button>`:""}<button id="pkX">Cerrar</button></div>`,"glass");
+    $("#pkX").onclick=closeModal;
+    document.querySelectorAll("[data-pk]").forEach(bt=>bt.onclick=()=>{ const k=bt.dataset.pk; let L=list.slice();
+      const done=()=>{ closeModal(); wkEdit[dw]=L.length?L:["descanso"]; render(); };
+      if(!k){ if(curK==="otro") delete wkTxt[dw]; L.splice(r,1); return done(); }
+      if(L.includes(k)&&k!==curK){ toast("Ya está ese día"); return; }
+      if(ACTS[k].k==="fuerza"){ const o=L.findIndex((x,i)=>i!==r&&ACTS[x]&&ACTS[x].k==="fuerza"); if(o>=0){ toast("Solo una sesión de fuerza por día"); return; } }
+      const put=()=>{ if(r<L.length) L[r]=k; else L.push(k); done(); };
+      if(k==="otro") otherTextModal(wkTxt[dw],t=>{ wkTxt[dw]=t; put(); }); else put(); }); });
+  { const wr=$("#wkRow"); if(wr) wr.onclick=()=>{ wkRows=Math.max(5,...[1,2,3,4,5,6,0].map(d=>wkEdit[d].filter(k=>k!=="descanso").length),wkRows||0)+1; render(); }; }
   on("[data-otxt]","click",el=>{ const dw=el.dataset.otxt; otherTextModal(wkTxt[dw],txt=>{ wkTxt[dw]=txt; render(); }); });
   const wa=$("#wkApply"); if(wa) wa.onclick=()=>{ c.week=clone(wkEdit); c.weekTxt=clone(wkTxt); saveConfig(); toast("Semana aplicada"); render(); };
   const ws=$("#wkSave"); if(ws) ws.onclick=()=>{ openModal(`<h3 style="margin-top:0">Guardar semana</h3><label class="f">Nombre<input id="pn" maxlength="40" placeholder="Semana con box"></label><div class="row end" style="margin-top:12px"><button id="pN">Cancelar</button><button class="pri" id="pO">Guardar</button></div>`);
